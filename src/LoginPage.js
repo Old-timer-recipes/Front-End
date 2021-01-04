@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
-  width:75%;
+  width:60%;
   margin: 0 auto;
   display:flex;
   justify-content: center;
