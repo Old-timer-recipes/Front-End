@@ -4,13 +4,13 @@ import styled from "styled-components"
 
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
-  width:60%;
+  width:65%;
   margin: 0 auto;
   display:flex;
   justify-content: center;
 `
 const TitleStyle = styled.div`
-  color: #FEB5A5;
+  color: #FEB5A5; 
 ;
 `
 
