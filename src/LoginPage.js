@@ -5,16 +5,37 @@ import { Link } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
-  margin: 0 auto;
   display:flex;
   justify-content: center;
-  border: 1px solid red;
+  padding: 1% 3% 3% 3%;
+  text-align: center;
+  box-shadow: 0px 30px 60px -40px rgba(31, 38, 23, 0.5);
+  border-radius: 10px;
+  font-family: 'Lato';
+  color: #5D534C;
 `
 const TitleStyle = styled.div`
-  color: #FEB5A5; 
+  color:#FEB5A5;
+  padding-top: 1.5rem;
+  font-size: 1.7rem;
+  font-family: 'Homemade Apple', cursive;
+  padding-left: 2rem; 
 `
 const ButtonStyle = styled.button`
-  background: #FEB5A5; 
+  border-radius: 2rem;
+  background-color:#FEB5A5;
+  color:white;
+  height: 3rem;
+  width: 15rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;  
+`
+const Form = styled.form`
+  display:flex;
+  flex-direction: column;
+  padding: 3%;
+  border: 1px solid red;
 `
 
 
@@ -73,12 +94,6 @@ const onChange = (evt) => {
 
 
 
-
-
-
-
-
-
   return (
     <div>
       <TitleStyle> 
@@ -87,7 +102,7 @@ const onChange = (evt) => {
       <LoginContainer>
         <div className="login-container">
             <h2>LOG IN</h2>
-            <form className="loginForm" onSubmit={onSubmit} >
+            <Form className="loginForm" onSubmit={onSubmit} >
                 {/* /////EMAIL INPUT///// */}
                 <label>
                     Email:
@@ -98,7 +113,7 @@ const onChange = (evt) => {
                     text="text"
                     />
                 </label>
-                <br></br>
+                {/* <br></br> */}
                 {/* /////PASSWORD INPUT///// */}
                 <label>
                     Password:
@@ -110,9 +125,9 @@ const onChange = (evt) => {
                     />
                 </label>
 
-            </form>
+            </Form>
           <ButtonStyle>
-            <button> LOG IN</button> 
+             LOG IN 
           </ButtonStyle>         
             <br></br>
             <Link to="/sign-up">Sign-Up</Link>

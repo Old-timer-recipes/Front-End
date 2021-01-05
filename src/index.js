@@ -9,7 +9,8 @@ const Styles = styled.div`
   background-color: #F2F2F2;
   display:flex;
   justify-content:center;
-  
+  border: 1px solid red;
+  padding: 2%;
 `
 
 
