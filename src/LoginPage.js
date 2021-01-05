@@ -1,18 +1,22 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import styled from "styled-components"
+import { Link } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
-  width:65%;
   margin: 0 auto;
   display:flex;
   justify-content: center;
+  border: 1px solid red;
 `
 const TitleStyle = styled.div`
   color: #FEB5A5; 
-;
 `
+const ButtonStyle = styled.button`
+  background: #FEB5A5; 
+`
+
 
 const initialLoginValues = {
   email: "",
@@ -83,7 +87,7 @@ const onChange = (evt) => {
       <LoginContainer>
         <div className="login-container">
             <h2>LOG IN</h2>
-            <form className="loginForm">
+            <form className="loginForm" onSubmit={onSubmit} >
                 {/* /////EMAIL INPUT///// */}
                 <label>
                     Email:
@@ -107,11 +111,12 @@ const onChange = (evt) => {
                 </label>
 
             </form>
-            
-            
-            <p>insert "LOGIN" button here</p>
-            <p>insert Sign-Up button link here</p>
-            <p>insert forgot password button link here</p>
+          <ButtonStyle>
+            <button> LOG IN</button> 
+          </ButtonStyle>         
+            <br></br>
+            <Link to="/sign-up">Sign-Up</Link>
+            <Link to="/password-reset">Forgot Password</Link>
         </div>
       </LoginContainer>
     </div>
