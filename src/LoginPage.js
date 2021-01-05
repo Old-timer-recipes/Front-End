@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -19,7 +19,7 @@ const LoginContainer = styled.div`
 const TitleStyle = styled.div`
   color:#FEB5A5;
   padding-top: 1.5rem;
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-family: 'Homemade Apple', cursive;
   padding-left: 2rem; 
 `
@@ -67,7 +67,7 @@ const [user, setUser] = useState(initialUsers)
 const [loginValues, setLoginValues] = useState(initialLoginValues)
 const [loginErrors, setLoginErrors] = useState(initialLoginErrors)
 
-const getUser = () => {
+const getUsers = () => {
     axios
         .get("https://reqres.in/api/users") // THIS IS AN OLD API FROM A PREVIOUS PROJECT?
         .then((res) =>{
@@ -76,8 +76,8 @@ const getUser = () => {
         .catch((err) => {
             console.log(err);
             debugger;
-        })
-}
+        });
+};
 
 const postNewUser = (newUser) => {
     axios  
@@ -88,25 +88,26 @@ const postNewUser = (newUser) => {
         })
 }
 
-const inputChange = (email, value) => {
+const inputChange = (name, value) => {
   yup
-    .reach(schema, email)
+    .reach(schema, name)
+    .validate(value)
     .then(() => {
       setLoginErrors({
         ...loginErrors,
-        [email]: "",
+        [name]: "",
       });
     })
     .catch((err) => {
       setLoginErrors({
         ...loginErrors,
-        [email]: err.errors[0],
+        [name]: err.errors[0],
       });
     });
     
     setLoginValues({
       ...loginValues,
-      [email]: value,
+      [name]: value,
     });
 }
 
@@ -116,7 +117,13 @@ const formSubmit = () => {
         email: loginValues.email.trim(),
         password: loginValues.password.trim(),
     }
+    postNewUser(newUser);
 }
+
+useEffect(() => {
+  getUsers();
+}, []);
+
 const onSubmit = (evt) => {
     evt.preventDefault();
     formSubmit();
@@ -140,30 +147,30 @@ const onChange = (evt) => {
             <Form className="loginForm" onSubmit={onSubmit} >
                 {/* /////EMAIL INPUT///// */}
                 <Label>
-                    Email:
-                    <input id="nameInput"
+                    <input id="emailInput"
+                    placeholder= "Email"
                     value= {loginValues.email}
                     onChange={onChange}
-                    name="name"
+                    name="email"
                     text="text"
                     />
                 </Label>
                 {/* <br></br> */}
                 {/* /////PASSWORD INPUT///// */}
                 <Label>
-                    Password:
-                    <input id="nameInput"
+                    <input id ="pwInput"
+                    placeholder= "Password"
                     value={loginValues.password}
                     onChange={onChange}
-                    name="name"
+                    name="password"
                     text="text"
                     />
                 </Label>
-
+                <ButtonStyle type="submit">
+                  LOG IN 
+                </ButtonStyle> 
             </Form>
-          <ButtonStyle>
-             LOG IN 
-          </ButtonStyle>         
+                  
             <Links>
               <Link to="/sign-up">Sign-Up</Link>
               <span> | </span> 
