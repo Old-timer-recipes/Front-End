@@ -25,7 +25,7 @@ const ButtonStyle = styled.button`
   border-radius: 2rem;
   background-color:#FEB5A5;
   color:white;
-  height: 3rem;
+  height: 2rem;
   width: 15rem;
   border: none;
   cursor: pointer;
@@ -34,9 +34,19 @@ const ButtonStyle = styled.button`
 const Form = styled.form`
   display:flex;
   flex-direction: column;
-  padding: 3%;
-  border: 1px solid red;
 `
+const Label = styled.label`
+  padding: 2%;
+  margin: 0% 0% 4% 0%;
+`
+const Links = styled.div`
+  text-decoration: none;
+  font-family: 'Lato';
+  color: #5D534C;
+  display: flex;
+  justify-content: flex-end;
+`
+
 
 
 const initialLoginValues = {
@@ -104,7 +114,7 @@ const onChange = (evt) => {
             <h2>LOG IN</h2>
             <Form className="loginForm" onSubmit={onSubmit} >
                 {/* /////EMAIL INPUT///// */}
-                <label>
+                <Label>
                     Email:
                     <input id="nameInput"
                     value= {loginValues.email}
@@ -112,10 +122,10 @@ const onChange = (evt) => {
                     name="name"
                     text="text"
                     />
-                </label>
+                </Label>
                 {/* <br></br> */}
                 {/* /////PASSWORD INPUT///// */}
-                <label>
+                <Label>
                     Password:
                     <input id="nameInput"
                     value={loginValues.password}
@@ -123,15 +133,17 @@ const onChange = (evt) => {
                     name="name"
                     text="text"
                     />
-                </label>
+                </Label>
 
             </Form>
           <ButtonStyle>
              LOG IN 
           </ButtonStyle>         
-            <br></br>
-            <Link to="/sign-up">Sign-Up</Link>
-            <Link to="/password-reset">Forgot Password</Link>
+            <Links>
+              <Link to="/sign-up">Sign-Up</Link>
+              <span> | </span> 
+              <Link to="/password-reset">Forgot Password</Link>
+            </Links>
         </div>
       </LoginContainer>
     </div>
