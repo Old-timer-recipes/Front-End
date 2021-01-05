@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import schema from './formSchemas/LoginSchema'
+import "./index.css"
 ////////////////////////////////////////// STYLES ARE HERE /////////////////////////////////////////////////
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
@@ -42,11 +43,10 @@ const Label = styled.label`
   margin: 0% 0% 4% 0%;
 `
 const Links = styled.div`
-  text-decoration: none;
   font-family: 'Lato';
   color: #5D534C;
-  display: flex;
-  justify-content: flex-end;
+  border: 1px solid red;
+  text-align: right; 
 `
 ///////////////////////////////////////////CODE BEGINS HERE///////////////////////////////////
 
@@ -84,7 +84,7 @@ const postNewUser = (newUser) => {
         .post("https://reqres.in/api/users", newUser)
         .then ((res) => {
             setUser([res.data, ...user]);
-            setLoginValues(initialUsers);
+            setLoginValues(initialLoginValues);
         })
 }
 
@@ -108,14 +108,15 @@ const inputChange = (name, value) => {
     setLoginValues({
       ...loginValues,
       [name]: value,
+
     });
 }
 
 
 const formSubmit = () => {
     const newUser = {
-        email: loginValues.email.trim(),
-        password: loginValues.password.trim(),
+        email: loginValues.email,
+        password: loginValues.password,
     }
     postNewUser(newUser);
 }
@@ -148,6 +149,7 @@ const onChange = (evt) => {
                 {/* /////EMAIL INPUT///// */}
                 <Label>
                     <input id="emailInput"
+                    className="input-box"
                     placeholder= "Email"
                     value= {loginValues.email}
                     onChange={onChange}
@@ -159,6 +161,7 @@ const onChange = (evt) => {
                 {/* /////PASSWORD INPUT///// */}
                 <Label>
                     <input id ="pwInput"
+                    className="input-box"
                     placeholder= "Password"
                     value={loginValues.password}
                     onChange={onChange}
@@ -172,9 +175,9 @@ const onChange = (evt) => {
             </Form>
                   
             <Links>
-              <Link to="/sign-up">Sign-Up</Link>
+              <Link className="links" to="/sign-up">Sign-Up</Link>
               <span> | </span> 
-              <Link to="/password-reset">Forgot Password</Link>
+              <Link className ="links" to="/password-reset">Forgot Password</Link>
             </Links>
         </div>
       </LoginContainer>
