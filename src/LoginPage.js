@@ -1,8 +1,10 @@
-import axios from 'axios'
-import React, {useState} from 'react'
-import styled from "styled-components"
-import { Link } from 'react-router-dom'
-
+import axios from 'axios';
+import React, {useState} from 'react';
+import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import * as yup from 'yup';
+import schema from './formSchemas/LoginSchema'
+////////////////////////////////////////// STYLES ARE HERE /////////////////////////////////////////////////
 const LoginContainer = styled.div`
   background-color: #FFFFFF;
   display:flex;
@@ -46,7 +48,7 @@ const Links = styled.div`
   display: flex;
   justify-content: flex-end;
 `
-
+///////////////////////////////////////////CODE BEGINS HERE///////////////////////////////////
 
 
 const initialLoginValues = {
@@ -85,6 +87,29 @@ const postNewUser = (newUser) => {
             setLoginValues(initialUsers);
         })
 }
+
+const inputChange = (email, value) => {
+  yup
+    .reach(schema, email)
+    .then(() => {
+      setLoginErrors({
+        ...loginErrors,
+        [email]: "",
+      });
+    })
+    .catch((err) => {
+      setLoginErrors({
+        ...loginErrors,
+        [email]: err.errors[0],
+      });
+    });
+    
+    setLoginValues({
+      ...loginValues,
+      [email]: value,
+    });
+}
+
 
 const formSubmit = () => {
     const newUser = {
