@@ -9,21 +9,22 @@ const Styles = styled.div`
   background-color: #F2F2F2;
   display:flex;
   justify-content:center;
-  
+  /* align-items: center;   */
+  padding-top: 8%;
 `
-const Center = styled.div`
-  background-color: #F2F2F2;
-  display:flex;
-  align-items:center;
-`
+// const Center = styled.div`
+//   background-color: #F2F2F2;
+//   display:flex;
+//   align-items:center;
+// `
 
 
 ReactDOM.render(
   <Styles> 
     <Router>
-      <Center>
+      {/* <Center> */}
         <App />
-      </Center>
+      {/* </Center> */}
     </Router>
   </Styles>,
   document.getElementById('root')
