@@ -7,9 +7,7 @@ import schema from './formSchemas/LoginSchema'
 import "./index.css"
 ////////////////////////////////////////// STYLES ARE HERE /////////////////////////////////////////////////
 
-const Content = styled.div`
-  /* width: 100%; */
-  `
+
   const TitleStyle = styled.div`
   color:#FEB5A5;
   padding-top: 1.5rem;
@@ -33,10 +31,6 @@ const LoginContainer = styled.div`
   font-family: 'Lato';
   color: #5D534C;
 `
-const H2 = styled.div`
-  font-family: 'Lato';
-  color: #5D534C;; 
-`
 
 const ButtonStyle = styled.button`
   border-radius: 2rem;
@@ -54,7 +48,7 @@ const Form = styled.form`
   flex-direction: column;
 `
 const Label = styled.label`
-  padding: 2%;
+  padding: 1%;
   margin: 0% 0% 4% 0%;
 `
 const Links = styled.div`
@@ -166,7 +160,7 @@ const onChange = (evt) => {
 
 
   return (
-    <Content>
+    <div>
       <TitleStyle> 
         <h1>Secret Family Recipes</h1>
       </TitleStyle> 
@@ -207,13 +201,13 @@ const onChange = (evt) => {
             </Form>
                   
             <Links>
-              <Link className="links" to="/sign-up">Sign-Up</Link>
-              <span> | </span> 
+              <Link className="links" to="/sign-up">Sign Up</Link>
+              <span>   |   </span> 
               <Link className ="links" to="/password-reset">Forgot Password</Link>
             </Links>
         </div>
       </LoginContainer>
-    </Content>
+    </div>
 
   )
 }

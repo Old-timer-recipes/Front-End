@@ -14,13 +14,16 @@ h2{
 .links{
   text-decoration: none;
   color: #5D534C;
-  
-
+}
+.loginLink{
+  text-decoration: none;
+  color: #FEB5A5;
 }
 .input-box{
   background-color:#F7F7F7;
   border: none;
-  height:25px;
-  width: 25rem;
-  font-size: 1.2rem;
+  height:28px;
+  width: 24rem;
+  font-size: 1.1rem;
+  padding: 1% 0% 1% 4%;
 }
