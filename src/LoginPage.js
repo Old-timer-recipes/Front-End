@@ -45,7 +45,6 @@ const Label = styled.label`
 const Links = styled.div`
   font-family: 'Lato';
   color: #5D534C;
-  border: 1px solid red;
   text-align: right; 
 `
 ///////////////////////////////////////////CODE BEGINS HERE///////////////////////////////////
@@ -60,18 +59,20 @@ const initialLoginErrors = {
   password: "",
 }
 const initialUsers = [];
+const initialDisabled = true;
 
 
 export default function LoginPage() {
 const [user, setUser] = useState(initialUsers)
 const [loginValues, setLoginValues] = useState(initialLoginValues)
 const [loginErrors, setLoginErrors] = useState(initialLoginErrors)
+const [disabled, setDisabled]=useState(initialDisabled);
 
 const getUsers = () => {
     axios
         .get("https://reqres.in/api/users") // THIS IS AN OLD API FROM A PREVIOUS PROJECT?
         .then((res) =>{
-            setUser(res.data);
+            setUser(res.data.data);
         })
         .catch((err) => {
             console.log(err);
@@ -89,6 +90,7 @@ const postNewUser = (newUser) => {
 }
 
 const inputChange = (name, value) => {
+ 
   yup
     .reach(schema, name)
     .validate(value)
@@ -125,15 +127,26 @@ useEffect(() => {
   getUsers();
 }, []);
 
+useEffect(() => {
+  schema.isValid(loginValues)
+  .then(valid => {
+    setDisabled(!valid)
+  })
+}, [loginValues])
+
 const onSubmit = (evt) => {
     evt.preventDefault();
     formSubmit();
 }
 
 const onChange = (evt) => {
-    setLoginValues(evt.target.value)
-
+  const { name, value } = evt.target;
+  inputChange(name, value);
 }
+
+// const onChange = (evt) => {
+//     setLoginValues(evt.target.value);
+// }
 
 
 
@@ -169,7 +182,11 @@ const onChange = (evt) => {
                     text="text"
                     />
                 </Label>
-                <ButtonStyle type="submit">
+                <div className="errors">
+                  <div>{loginErrors.email}</div>
+                  <div>{loginErrors.password}</div>
+                </div>
+                <ButtonStyle type="submit" disabled={disabled}>
                   LOG IN 
                 </ButtonStyle> 
             </Form>
