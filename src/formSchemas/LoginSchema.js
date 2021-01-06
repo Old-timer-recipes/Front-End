@@ -2,10 +2,10 @@ import * as yup from 'yup'
 
 
 export default yup.object().shape({
-    email: yup
+    username: yup
         .string()
-        .email("must be a valid email")
-        .required("a valid email address is required"),
+        .required("a valid email address is required")
+        .min(3, "username must be at least 3 characters long"),
     password: yup
         .string()
         .required("a password is required")

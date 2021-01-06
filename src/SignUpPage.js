@@ -59,14 +59,14 @@ const Links = styled.div`
     //////////////CODE BEGINS HERE////////////////
 const initialSUValues = {
     name: "",
-    email: "",
+    username: "",
     password: "",
     passwordConfirm: "",
 }
 
 const initialSUErrors = {
     name: "",
-    email: "",
+    username: "",
     password: "",
     passwordConfirm: "",
 }
@@ -128,7 +128,7 @@ const inputChange = (name, value) => {
 const formSubmit = () => {
     const newSignup = {
         name: signupValues.name,
-        email: signupValues.email,
+        username: signupValues.username,
         password: signupValues.password,
         passwordConfirm: signupValues.passwordConfirm,
     }
@@ -180,13 +180,13 @@ return (
                     </Label>
                     <Label>
                         <input
-                        id="SUemail"
+                        id="SUusername"
                         className="input-box"
-                        placeholder="Email"
-                        value={signupValues.email}
+                        placeholder="Username"
+                        value={signupValues.username}
                         onChange={onChange}
-                        name= "email"
-                        type= "email"
+                        name= "username"
+                        type= "text"
                         maxLength= "30"
                     />
                     </Label>
