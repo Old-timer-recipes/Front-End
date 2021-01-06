@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import * as yup from 'yup';
+import schema from './formSchemas/SignupSchema'
 
 
 
@@ -54,11 +56,57 @@ const postNewSignup = (newSignup) => {
         })
 }
 
+const inputChange = (name, value) => {
+    yup
+        .reach(schema, name)
+        .validate(value)
+        .then(() => {
+            setSignupErrors({
+                ...signupErrors,
+                [name]: "",
+            });
+        })
+        .catch ((err) => {
+            setSignupErrors({
+                ...signupErrors,
+                [name]: err.errors[0],
+            });
+        });
+        setSignupValues({
+            ...signupValues,
+            [name]: value,
+        });
+}
 
+const formSubmit = () => {
+    const newSignup = {
+        name: signupValues.name,
+        email: signupValues.email,
+        password: signupValues.password,
+        passwordConfirm: signupValues.passwordConfirm,
+    }
+    postNewSignup(newSignup);
+}
 
+useEffect(() => {
+    getSignup();
+}, []);
+
+useEffect(() => {
+    schema.isValid(signupValues)
+    .then(valid => {
+        setDisabled(!valid)
+    })
+}, [signupValues])
 
 const onSubmit = (evt) => {
     evt.preventDefault();
+    formSubmit();
+}
+
+const onChange = (evt) => {
+    const { name, value } = evt.target;
+    inputChange (name, value);
 }
 
 
@@ -73,6 +121,8 @@ return (
                     <input
                     id="SUname"
                     placeholder="Name"
+                    value={signupValues.name}
+                    onChange={onChange}
                     name= "name"
                     type= "text"
                     maxLength= "20"
@@ -82,6 +132,8 @@ return (
                     <input
                     id="SUemail"
                     placeholder="Email"
+                    value={signupValues.email}
+                    onChange={onChange}
                     name= "email"
                     type= "email"
                     maxLength= "30"
@@ -92,6 +144,8 @@ return (
                     <input
                     id="pw"
                     placeholder="Password"
+                    value={signupValues.password}
+                    onChange={onChange}
                     name= "password"
                     type= "password"
                     maxLength= "20"
@@ -101,12 +155,14 @@ return (
                     <input
                     id="pwconfirm"
                     placeholder="Confirm Password"
+                    value={signupValues.passwordConfirm}
+                    onChange={onChange}
                     name= "passwordConfirm"
                     type= "password"
                     maxLength= "30"
                 />
                 </label>
-                <button type="submit" > Submit </button>
+                <button type="submit" disabled={disabled}> Submit </button>
                 <div>
                     <p>Already have an account?</p> 
                     <Link to="/login">Login</Link>
