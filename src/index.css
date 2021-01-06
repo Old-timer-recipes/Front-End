@@ -8,12 +8,19 @@ code {
     monospace;
 }
 
+h2{
+  font-size: 1.7rem;
+}
 .links{
   text-decoration: none;
   color: #5D534C;
+  
 
 }
 .input-box{
-  background-color: white;
-  width: 100%;
+  background-color:#F7F7F7;
+  border: none;
+  height:25px;
+  width: 25rem;
+  font-size: 1.2rem;
 }
