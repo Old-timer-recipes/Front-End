@@ -60,11 +60,11 @@ const Links = styled.div`
 
 
 const initialLoginValues = {
-  email: "",
+  username: "",
   password: "",
 } 
 const initialLoginErrors = {
-  email: "",
+  username: "",
   password: "",
 }
 const initialUsers = [];
@@ -126,7 +126,7 @@ const inputChange = (name, value) => {
 
 const formSubmit = () => {
     const newUser = {
-        email: loginValues.email,
+        username: loginValues.username,
         password: loginValues.password,
     }
     postNewUser(newUser);
@@ -168,14 +168,14 @@ const onChange = (evt) => {
         <div className="login-container">
             <h2>LOG IN</h2>
             <Form className="loginForm" onSubmit={onSubmit} >
-                {/* /////EMAIL INPUT///// */}
+                {/* /////USERNAME INPUT///// */}
                 <Label>
-                    <input id="emailInput"
+                    <input id="usernameInput"
                     className="input-box"
-                    placeholder= "Email"
-                    value= {loginValues.email}
+                    placeholder= "Username"
+                    value= {loginValues.username}
                     onChange={onChange}
-                    name="email"
+                    name="username"
                     text="text"
                     />
                 </Label>
@@ -192,7 +192,7 @@ const onChange = (evt) => {
                     />
                 </Label>
                 <div className="errors">
-                  <div>{loginErrors.email}</div>
+                  <div>{loginErrors.username}</div>
                   <div>{loginErrors.password}</div>
                 </div>
                 <ButtonStyle type="submit" disabled={disabled}>
