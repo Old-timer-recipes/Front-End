@@ -1,6 +1,7 @@
 import styled  from 'styled-components'
 
 
+const s = "Test"
 
 
 const Container = styled.div`
