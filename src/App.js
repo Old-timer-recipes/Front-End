@@ -1,17 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Route } from 'react-router-dom'
+import LoginPage from "./LoginPage"
 import Dashboard from './components/Dashboard'
 
-
-
-
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Dashboard />
+    <div>
+      <Dashboard/>
+      {/* <Route path="/login">
+        <LoginPage/>
+      </Route> */}
     </div>
-  );
+  )
 }
-
-export default App;
