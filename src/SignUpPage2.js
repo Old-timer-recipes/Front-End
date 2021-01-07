@@ -71,95 +71,70 @@ const initialSUErrors = {
     passwordConfirm: "",
 }
 
-const initialSU = {};
+// const initialSU = {};
 const initialDisabled = true;
 
 
 export default function SignUpPage() {
-const [signup, setSignup] = useState(initialSU)
-const [signupValues, setSignupValues] = useState(initialSUValues)
-const [signupErrors, setSignupErrors] = useState(initialSUErrors)
+const [login, setLogin] = useState(initialSUValues);
+const [errors, setErrors] = useState(initialSUErrors);
 const [disabled, setDisabled] = useState(initialDisabled)
 
-
-
-
-// const getSignup = () => {
-//     axios
-//         .get("https://secretfamily-recipes.herokuapp.com/api/auth/register")
-//         .then((res) => {
-//             setSignup(res.data.data);
+// const postNewSignUp = (newSignup) => {
+//     // const { name, username, password, passwordConfirm } = newSignup
+//     // const newUser = { username, password }
+//     axios  
+//         .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newSignup)
+//         .then ((res) => {
+//             console.log(res);
+//             setLogin([res.data, ...login]);
 //         })
 //         .catch((err) => {
 //             console.log(err)
-//             debugger;
 //         });
-// };
+// }
 
-const postNewSignup = (newSignup) => {
-    const { name, username, password, passwordConfirm } = newSignup
-    const newUser = { username, password }
-    axios
-        .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newUser)
-        .then ((res) => {
-            console.log(res)
-            setSignupErrors([res.data.data, ...signup]);
-            setSignupValues(initialSUValues);
-        })
+
+const setFormErrors = (name, value) => {
+    yup.reach(schema, name).validate(value)
+        .then(() => { setErrors({...errors, [name]: ""});})
+        .catch(err => {setErrors({...errors, [name]:err.errors[0]});});
+        // setLogin({
+        //     ...login, [name]: value
+        // });
 }
 
-const inputChange = (name, value) => {
-    yup
-        .reach(schema, name)
-        .validate(value)
-        .then(() => {
-            setSignupErrors({
-                ...signupErrors,
-                [name]: "",
+
+const handleChange = event => {
+    const { name, value } = event.target
+    setFormErrors (name, value)
+    setLogin({ ...login, [name]: value }); // IS THIS THE SAME AS SetFormErrors setLogin() area?
+};
+
+const handleSubmit = event => {
+    event.preventDefault();
+    const newSignup = {name: login.name,
+        username: login.username,
+        password: login.password,
+        passwordConfirm: login.passwordConfirm,}
+    axios  
+            .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newSignup)
+            .then ((res) => {
+                setLogin(initialSUValues)
+                // console.log(res);
+                // setLogin([res.data, ...login]);
+            })
+            .catch((err) => {
+                debugger;
             });
-        })
-        .catch ((err) => {
-            setSignupErrors({
-                ...signupErrors,
-                [name]: err.errors[0],
-            });
-        });
-        setSignupValues({
-            ...signupValues,
-            [name]: value,
-        });
-}
-
-const formSubmit = () => {
-    const newSignup = {
-        name: signupValues.name,
-        username: signupValues.username,
-        password: signupValues.password,
-        passwordConfirm: signupValues.passwordConfirm,
-    }
-   return newSignup;
-}
-
-// useEffect(() => {
-//     getSignup();
-// }, []);
+};
 
 useEffect(() => {
-    schema.isValid(signupValues)
-    .then(valid => {
-        setDisabled(!valid)
-    })
-}, [signupValues])
+    schema.isValid(login).then(valid => {
+        setDisabled(!valid);
+    });
+}, [login])
 
-const onSubmit = (evt) => {
-    evt.preventDefault();
-    formSubmit();
-}
-
-const onChange = (evt) => {
-    const { name, value } = evt.target;
-    inputChange (name, value);
-}
 
 
 return (
@@ -170,57 +145,60 @@ return (
         <SignUpContainer>
             <div className="signUpPage">
                 <h2>SIGN UP</h2>
-                <Form onSubmit={onSubmit}>
+                <Form onSubmit={event => handleSubmit(event)}>
                     <Label>
                         <input
                         id="SUname"
                         className="input-box"
                         placeholder="Name"
-                        value={signupValues.name}
-                        onChange={onChange}
+                        value={login.name}
+                        onChange={event => handleChange(event)}
                         name= "name"
                         type= "text"
                         maxLength= "20"
-                    />
+                        />
                     </Label>
+                     <p className="error">{errors.name}</p>
                     <Label>
                         <input
                         id="SUusername"
                         className="input-box"
                         placeholder="Username"
-                        value={signupValues.username}
-                        onChange={onChange}
+                        value={login.username}
+                        onChange={event => handleChange(event)}
                         name= "username"
                         type= "text"
                         maxLength= "30"
-                    />
+                        />
                     </Label>
-                
+                    <p className="error">{errors.username}</p>
                     <Label>
                         <input
                         id="pw"
                         className="input-box"
                         placeholder="Password"
-                        value={signupValues.password}
-                        onChange={onChange}
+                        value={login.password}
+                        onChange={event => handleChange(event)}
                         name= "password"
                         type= "password"
                         maxLength= "20"
-                    />
+                        />
                     </Label>
+                    <p className="error">{errors.password}</p>
                     <Label>
                         <input
                         id="pwconfirm"
                         className="input-box"
                         placeholder="Confirm Password"
-                        value={signupValues.passwordConfirm}
-                        onChange={onChange}
+                        value={login.passwordConfirm}
+                        onChange={event => handleChange(event)}
                         name= "passwordConfirm"
                         type= "password"
                         maxLength= "30"
-                    />
+                        />
                     </Label>
-                    <ButtonStyle type="submit" disabled={disabled}> Submit </ButtonStyle>
+                    <p className="error">{errors.passwordConfirm}</p>
+                    <ButtonStyle type="submit" disabled={disabled} > Submit </ButtonStyle>
                     <Links>
                         <span>Already have an account? </span> 
                         <Link to="/login" className="loginLink" >Login</Link>
