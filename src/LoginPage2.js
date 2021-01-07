@@ -72,7 +72,7 @@ const initialDisabled = true;
 
 
 export default function LoginPage() {
-const [signup, setSignUp] = useState(initialLoginValues);
+const [user, setUser] = useState(initialLoginValues);
 const [errors, setErrors] = useState(initialLoginErrors);
 const [disabled, setDisabled] = useState(initialDisabled);
 
@@ -82,21 +82,21 @@ const setFormErrors = (name, value) => {
         .catch(err => {setErrors({...errors, [name]:err.errors[0]});});
 }
 
-const onChange = event => {
+const handleChange = event => {
     const { name, value } = event.target
-    setErrors(name, value)
-    setSignUp({...signup, [name]:value});
+    setFormErrors (name, value)
+    setUser({...user, [name]: value });
 }
 
-const onSubmit = event => {
+const handleSubmit = event => {
     event.preventDefault();
-    const newSignup = {username: signup.username, password: signup.password}
+    const newSignup = {username: user.username, password: user.password}
     const {username, password} = newSignup
     const newUser = {username, password}
     axios
-        .post("https://reqres.in/api/users", newUser)
+        .post("https://secretfamily-recipes.herokuapp.com/api/auth/login", newUser)
         .then((res) => {
-            setSignUp(initialLoginValues)
+            setUser(initialLoginValues)
         })
         .catch((err) => {
             debugger;
@@ -104,10 +104,10 @@ const onSubmit = event => {
 };
 
 useEffect(() => {
-    schema.isValid(signup).then(valid => {
+    schema.isValid(user).then(valid => {
         setDisabled(!valid);
     });
-}, [signup])
+}, [user])
 
   return (
     <div>
@@ -117,14 +117,14 @@ useEffect(() => {
       <LoginContainer>
         <div className="login-container">
             <h2>LOG IN</h2>
-            <Form className="loginForm" onSubmit={onSubmit} >
+            <Form className="loginForm" onSubmit={event => handleSubmit(event)} >
                 {/* /////USERNAME INPUT///// */}
                 <Label>
                     <input id="usernameInput"
                     className="input-box"
                     placeholder= "Username"
-                    value= {signup.username}
-                    onChange={onChange}
+                    value= {user.username}
+                    onChange={event => handleChange(event)}
                     name="username"
                     text="text"
                     />
@@ -135,8 +135,8 @@ useEffect(() => {
                     <input id ="pwInput"
                     className="input-box"
                     placeholder= "Password"
-                    value={signup.password}
-                    onChange={onChange}
+                    value={user.password}
+                    onChange={event => handleChange(event)}
                     name="password"
                     text="text"
                     />

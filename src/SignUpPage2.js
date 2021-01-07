@@ -80,21 +80,6 @@ const [login, setLogin] = useState(initialSUValues);
 const [errors, setErrors] = useState(initialSUErrors);
 const [disabled, setDisabled] = useState(initialDisabled)
 
-// const postNewSignUp = (newSignup) => {
-//     // const { name, username, password, passwordConfirm } = newSignup
-//     // const newUser = { username, password }
-//     axios  
-//         .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newSignup)
-//         .then ((res) => {
-//             console.log(res);
-//             setLogin([res.data, ...login]);
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//         });
-// }
-
-
 const setFormErrors = (name, value) => {
     yup.reach(schema, name).validate(value)
         .then(() => { setErrors({...errors, [name]: ""});})
@@ -120,7 +105,7 @@ const handleSubmit = event => {
         const { name, username, password, passwordConfirm } = newSignup
         const newUser = { username, password }
     axios  
-            .post("https://reqres.in/api/users", newUser)
+            .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newUser)
             .then ((res) => {
                 setLogin(initialSUValues)
                 // console.log(res);
