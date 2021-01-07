@@ -34,6 +34,18 @@ const [signupValues, setSignupValues] = useState(initialSUValues)
 const [signupErrors, setSignupErrors] = useState(initialSUErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
 
+const onSubmit = (newUser) => {
+   const newUser = {name, email, password}
+    console.log({newUser})
+    axios.post('https://secretfamily-recipes.herokuapp.com/api/auth/register', newUser)
+    .then((res) => {
+       console.log('res',res)
+    })
+    .catch((err) => {
+        console.log('error',err)
+    })
+}
+
 
 const getSignup = () => {
     axios
@@ -99,10 +111,10 @@ useEffect(() => {
     })
 }, [signupValues])
 
-const onSubmit = (evt) => {
-    evt.preventDefault();
-    formSubmit();
-}
+// const onSubmit = (evt) => {
+//     evt.preventDefault();
+//     formSubmit();
+// }
 
 const onChange = (evt) => {
     const { name, value } = evt.target;
