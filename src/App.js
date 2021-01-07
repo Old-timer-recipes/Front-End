@@ -1,17 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import Dashboard from './components/Dashboard'
+import React from 'react'
+import { Route } from 'react-router-dom'
+import LoginPage from "./LoginPage"
+import SignUpPage from './SignUpPage'
+import SignUpPage2 from './SignUpPage2'
 
-
-
-
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Dashboard />
+    <div>
+      <Route path="/login">
+        <LoginPage/>
+      </Route>
+      <Route path="/sign-up">
+        <SignUpPage/>
+      </Route>
+      <Route path="/test">
+        <SignUpPage2/>
+      </Route>
     </div>
-  );
+  )
 }
-
-export default App;
