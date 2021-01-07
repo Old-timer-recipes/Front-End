@@ -71,7 +71,7 @@ const initialSUErrors = {
     passwordConfirm: "",
 }
 
-const initialSU = [];
+const initialSU = {};
 const initialDisabled = true;
 
 
@@ -80,6 +80,8 @@ const[signup, setSignup] = useState(initialSU)
 const [signupValues, setSignupValues] = useState(initialSUValues)
 const [signupErrors, setSignupErrors] = useState(initialSUErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
+
+
 
 
 const getSignup = () => {
@@ -95,8 +97,10 @@ const getSignup = () => {
 };
 
 const postNewSignup = (newSignup) => {
+    const { name, username, password, passwordConfirm } = newSignup
+    const newUser = { username, password }
     axios
-        .post("https://reqres.in/api/users", newSignup)
+        .post("https://reqres.in/api/users", newUser)
         .then ((res) => {
             setSignupErrors([res.data, ...signup]);
             setSignupValues(initialSUValues);
