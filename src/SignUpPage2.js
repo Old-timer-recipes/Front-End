@@ -102,7 +102,7 @@ const handleSubmit = event => {
         username: login.username,
         password: login.password,
         passwordConfirm: login.passwordConfirm,}
-        const { name, username, password, passwordConfirm } = newSignup
+        const { username, password, passwordConfirm } = newSignup
         const newUser = { username, password }
     axios  
             .post("https://secretfamily-recipes.herokuapp.com/api/auth/register", newUser)

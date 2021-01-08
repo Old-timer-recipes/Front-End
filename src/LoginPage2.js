@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import schema from './formSchemas/LoginSchema'
 import "./index.css"
+import { axiosWithAuth } from './utils/axiosWithAuth';
 ////////////////////////////////////////// STYLES ARE HERE /////////////////////////////////////////////////
 
 
@@ -87,19 +88,22 @@ const handleChange = event => {
     setFormErrors (name, value)
     setUser({...user, [name]: value });
 }
+let history = useHistory();
 
 const handleSubmit = event => {
     event.preventDefault();
-    const newSignup = {username: user.username, password: user.password}
-    const {username, password} = newSignup
-    const newUser = {username, password}
+    // const newSignup = {username: user.username, password: user.password}
+    // const {username, password} = newSignup
+    // const newUser = {username, password}
+    // console.log(newUser)
     axios
-        .post("https://secretfamily-recipes.herokuapp.com/api/auth/login", newUser)
+        .post("https://secretfamily-recipes.herokuapp.com/api/auth/login", user)
         .then((res) => {
-            setUser(initialLoginValues)
+            localStorage.setItem('token', res.data.token)
+            history.push('/dashboard')
         })
         .catch((err) => {
-            debugger;
+            console.log(err);
         });
 };
 
