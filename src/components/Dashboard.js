@@ -1,7 +1,7 @@
 import styled  from 'styled-components'
-import react, { useState } from 'react'
-
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Card from './Card'
 
 const Container = styled.div`
 display:flex;
@@ -178,8 +178,19 @@ const dynamicSearch = () =>{
   return name.filter(names => names.toLowerCase().includes(search.toLowerCase()))
 }
 
+const [api1, setapi] = useState([])
 
-
+useEffect(() =>{
+  axios
+    .get('https://secretfamily-recipes.herokuapp.com/api/recipes')
+    .then(resp =>{
+      console.log(resp.data[0])
+      setapi(resp.data[0])
+    })
+    .catch(err => {
+      console.log(err)
+    })
+},[])
   return (
     <div className="App" >
         <Container >
@@ -239,27 +250,38 @@ const dynamicSearch = () =>{
       </form>
     </RecipeFourm>
 
-  <Rec id ="Ntitle">
+   <Rec id ="Ntitle">
   <h1 onClick={toggleTFormForm} name = {dynamicSearch}>{name}</h1>
-  </Rec>
-  
+  </Rec> 
+
+   {/* {api.map((Obj) =>
+  <Card api={Obj}/>
+  )
+
+  } */}
+
+
+  <Card id ="Ntitle" name = {api1.recipe_title}/>
+  <Card id ="Ntitle" />
+  <Card id ="Ntitle" />
+  <Card id ="Ntitle" />
   <Rec1 id = "Fourmmm">
   <h3>Recipe Title:</h3>
-  <p>{name}</p>
+  <p>{api1.recipe_title}</p>
   <h3>From the Kitchen of</h3>
-  <p>{Kitchen}</p>
+  <p>{api1.from_kitchen_of}</p>
   <h3>Category</h3>
-  <p>{Category}</p>
+  <p>{api1.category}</p>
   <h3>Prep Time</h3>
-  <p>{Prep}</p>
+  <p>{api1.prep_time}</p>
   <h3>Cook Time</h3>
-  <p>{Cook}</p>
+  <p>{api1.cook_time}</p>
   <h3>Number of Servings</h3>
-  <p>{Servings}</p>
+  <p>{api1.servings}</p>
   <h3>Ingredient</h3>
-  <p>{Ingredient}</p>
+  <p>{api1.recipe_title}</p>
   <h3>Directions</h3>
-  <p>{Directions}</p>
+  <p>{api1.directions}</p>
 
   </Rec1> 
 
